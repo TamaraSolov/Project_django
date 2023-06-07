@@ -86,7 +86,7 @@
             <h2 class="mb-4">Related Products</h2>
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
           </div>
-        </div>
+        </div>   		
     	</div>
     	<div class="container">
     		<div class="row">
@@ -232,19 +232,19 @@
 
 		var quantitiy=0;
 		   $('.quantity-right-plus').click(function(e){
-
+		        
 		        // Stop acting like a button
 		        e.preventDefault();
 		        // Get the field name
 		        var quantity = parseInt($('#quantity').val());
-
+		        
 		        // If is not undefined
-
+		            
 		            $('#quantity').val(quantity + 1);
 
-
+		          
 		            // Increment
-
+		        
 		    });
 
 		     $('.quantity-left-minus').click(function(e){
@@ -252,15 +252,15 @@
 		        e.preventDefault();
 		        // Get the field name
 		        var quantity = parseInt($('#quantity').val());
-
+		        
 		        // If is not undefined
-
+		      
 		            // Increment
 		            if(quantity>0){
 		            $('#quantity').val(quantity - 1);
 		            }
 		    });
-
+		    
 		});
 	</script>
   {% endblock %}
