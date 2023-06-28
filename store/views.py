@@ -1,12 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.db.models import OuterRef, Subquery, F, ExpressionWrapper, DecimalField, Case, When
 from django.utils import timezone
-from .models import Product, Discount, Cart
+from .models import Product, Discount, Cart, Wishlist
 from rest_framework import viewsets, response
 from rest_framework.permissions import IsAuthenticated
-from .serializers import CartSerializer
+from .serializers import CartSerializer, WishListSerilizers
 from django.shortcuts import get_object_or_404
+
 
 
 class CartViewSet(viewsets.ModelViewSet):
@@ -244,3 +245,21 @@ class ProductSingleView(View):
         #              'url': 'store/images/product-12.jpg'}
         #         }
         # return render(request, "store/product-single.html", context=data[id])
+
+class WishlistView(View):
+
+   def get(self, request):
+       if request.user.is_authenticated:
+           pr = Wishlist.objects.filter(user=request.user)
+           # код который необходим для обработчика
+           return render(request, "store/wishlist.html", {"data": pr})
+       # Иначе отправляет авторизироваться
+       return redirect('login:login')  # from django.shortcuts import redirect
+
+class WishListSet(viewsets.ModelViewSet):
+  queryset = Wishlist.objects.all()
+  serializer_class = WishListSerilizers
+  permission_classes = (IsAuthenticated,)
+
+  def get_queryset(self):
+      return self.queryset.filter(user=self.request.user)
